@@ -1,4 +1,4 @@
-FROM mysql:5.7
+FROM mariadb:latest
 
 COPY ./database/sql/* /docker-entrypoint-initdb.d/
 COPY ./database/config/* /etc/mysql/conf.d/

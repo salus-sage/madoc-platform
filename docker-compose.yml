@@ -1,5 +1,25 @@
-version: "3"
+version: "2.1"
 services:
+  api-gateway:
+    container_name: madoc-platform-api-gateway
+    build:
+      context: services/api-gateway
+    links:
+      - omeka-ecosystem
+      - annotation-server
+    environment:
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/etc/kong.yml
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
   omeka-ecosystem:
     container_name: madoc-platform-omeka
     build:
@@ -64,46 +84,47 @@ services:
   annotation-database:
     container_name: madoc-annotation-database
     image: "garyttierneydi/elucidate-database:1.4.3-SNAPSHOT"
+    mem_limit: 1073741824
     environment:
       - POSTGRES_DB=annotations
 
-  search-elasticsearch:
-    container_name: search-elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
-    environment:
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.type=single-node"
-    ports:
-      - 9203:9200
-      - 9204:9201
+#  search-elasticsearch:
+#    container_name: search-elasticsearch
+#    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
+#    environment:
+#      - bootstrap.memory_lock=true
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#      - "discovery.type=single-node"
+#    ports:
+#      - 9203:9200
+#      - 9204:9201
+#
+#  search-founda:
+#    image: digirati/jane-founda:d0e7610dc15073e85fce20ee42215e192b16907b
+#    environment:
+#      - WORKERS=2
+#      - search_annotation_index=jane-annotations
+#      - search_elasticsearch_base=search-elasticsearch
+#      - search_elasticsearch_port=9200
+#      - search_ssl_boolean=false
+#    ports:
+#      - 8103:8000
+#    links:
+#      - search-elasticsearch
 
-  search-founda:
-    image: digirati/jane-founda:d0e7610dc15073e85fce20ee42215e192b16907b
-    environment:
-      - WORKERS=2
-      - search_annotation_index=jane-annotations
-      - search_elasticsearch_base=search-elasticsearch
-      - search_elasticsearch_port=9200
-      - search_ssl_boolean=false
-    ports:
-      - 8103:8000
-    links:
-      - search-elasticsearch
-
-  search-indexer:
-    container_name: search-indexer
-    image: digirati/madoc-indexer:c26e42ad8b8e721d20d254e5214679498868518d
-    environment:
-      - WORKERS=2
-      - search_annotation_index=jane-annotations
-      - search_elasticsearch_base=search-elasticsearch
-      - search_elasticsearch_port=9200
-      - search_ssl_boolean=false
-    ports:
-      - 8104:8000
-    links:
-      - omeka-ecosystem
-      - annotation-server
-      - search-elasticsearch
-      - search-founda
+#  search-indexer:
+#    container_name: search-indexer
+#    image: digirati/madoc-indexer:c26e42ad8b8e721d20d254e5214679498868518d
+#    environment:
+#      - WORKERS=2
+#      - search_annotation_index=jane-annotations
+#      - search_elasticsearch_base=search-elasticsearch
+#      - search_elasticsearch_port=9200
+#      - search_ssl_boolean=false
+#    ports:
+#      - 8104:8000
+#    links:
+#      - omeka-ecosystem
+#      - annotation-server
+#      - search-elasticsearch
+#      - search-founda

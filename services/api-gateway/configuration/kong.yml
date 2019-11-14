@@ -1,0 +1,29 @@
+plugins:
+  - name: jwt
+    enabled: true
+
+services:
+  - name: omeka
+    url: http://omeka/
+    routes:
+      - name: root
+        paths:
+          - /omeka/
+
+  - name: annotations
+    url: http://annotation-server/
+    routes:
+      - name: root
+        paths:
+          - /annotations/
+
+consumers:
+  - username: api-internal
+
+jwt_secrets:
+  - consumer: api-internal
+    # Auto-generated if not present:
+      # algorithm: HS256|RS256
+      # key: <...>
+      # secret: <...>
+      # rsa_public_key
