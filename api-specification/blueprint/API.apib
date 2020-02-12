@@ -1,0 +1,100 @@
+FORMAT: 1A
+
+# DLCS API
+
+API for Digital Library Cloud Services, an open source cloud based platform for
+hosting and delivering interoperable digitised content following common open standards.
+
+# Group Test
+This is testing a group of resources.
+
+## Capture model list [/api/capture-models]
+CRUD APIs over the capture model.
+
+### List all capture models [GET]
+
+- Response 200 (application/json)
+
+    ```json
+    [
+        {
+            "id": "example-uuid-1",
+            "structure": {
+                "label": "Top structure",
+                "type": "model",
+                "fields": ["name"]
+            },
+            "document": {
+                "id": "doc-id-1",
+                "type": "entity",
+                "properties": {
+                    "name": {
+                        "id": "1",
+                        "label": "Name",
+                        "type": "textbox",
+                        "value": ""
+                    }
+                }
+            }
+        },
+        {
+            "id": "example-uuid-2",
+            "structure": {
+                "label": "Top structure",
+                "type": "model",
+                "fields": ["name"]
+            },
+            "document": {
+                "id": "doc-id-2",
+                "type": "entity",
+                "properties": {
+                    "name": {
+                        "id": "2",
+                        "label": "Name",
+                        "type": "textbox",
+                        "value": ""
+                    }
+                }
+            }
+        }
+    ]
+    ```
+
+## Capture model [/api/capture-models/{capture_model_id}]
+
+- Parameters
+    - capture_model_id (string)
+
+### Get single capture model [GET]
+
+- Response 200 (application/json)
+
+    ```json
+    {
+        "id": "example-uuid",
+        "structure": {
+            "label": "Top structure",
+            "type": "model",
+            "fields": ["name"]
+        },
+        "document": {
+            "id": "doc-id",
+            "type": "entity",
+            "properties": {
+                "name": {
+                    "id": "1",
+                    "label": "Name",
+                    "type": "textbox",
+                    "value": ""
+                }
+            }
+        }
+    }
+    ```
+
+## Data Structures
+
+### CaptureModel
+- id: example-uuid
+- label: Label from model
+    "label": "Label from model"

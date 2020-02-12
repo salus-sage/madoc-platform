@@ -47,6 +47,10 @@ services:
       - ./database/data:/var/lib/mysql/
     ports:
       - "3334:3306"
+    ulimits:
+      nofile:
+        soft: "65536"
+        hard: "65536"
 
   annotation-server:
     container_name: madoc-annotation-server

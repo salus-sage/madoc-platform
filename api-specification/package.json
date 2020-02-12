@@ -1,0 +1,13 @@
+{
+  "name": "api-specification",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "aglio --theme-template triple --theme-variables streak -i blueprint/API.apib -s",
+    "build": "aglio --theme-template triple --theme-variables streak -i blueprint/API.apib -o ./dist/index.html"
+  },
+  "dependencies": {
+    "aglio": "^2.3.0"
+  }
+}
