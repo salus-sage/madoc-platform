@@ -1,4 +1,4 @@
-FROM digirati/madoc-omeka-s:latest
+FROM salus-sage/madoc-omeka-s:latest
 
 MAINTAINER "Gary Tierney" <gary.tierney@digirati.com>
 MAINTAINER "Stephen Fraser" <stephen.fraser@digirati.com>
